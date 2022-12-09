@@ -1,0 +1,19 @@
+/* Nova Tool CSS */
+@tailwind components;
+@tailwind utilities;
+
+
+/* hide sidebar */
+#app[data-app="NovaKanban"] #nova>:last-child>:first-child {
+  display: none;
+}
+
+#app[data-app="NovaKanban"] #nova>:last-child>:last-child {
+  margin-left: 0;
+  padding: 0;
+}
+
+/* hide footer */
+#app[data-app="NovaKanban"] #nova>:last-child>:last-child>:last-child {
+  display: none;
+}
