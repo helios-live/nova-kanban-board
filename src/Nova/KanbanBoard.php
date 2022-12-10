@@ -89,9 +89,11 @@ class KanbanBoard extends MyResource
             $field->hide();
             return;
           }
-          $field->rules('required');
+          // $field->rules(['required', 'nullable']);
           $model = $formData->$kn ?? null;
           $list = $this->getModelAttributes($model);
+
+          $list = array_merge([null => 'N/A'], $list);
 
           $field->options($list);
         }),

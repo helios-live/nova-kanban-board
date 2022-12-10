@@ -63,14 +63,16 @@ class KanbanItem extends Model
         return;
       }
 
-      $prop = $item->board->model->target_column_attribute;
+      $cprop = $item->board->model->target_column_attribute;
 
       if ($title_changed && !is_null($item->board->model->target_title_attribute)) {
         $tprop = $item->board->model->target_title_attribute;
         $inst->$tprop = $item->title;
       }
 
-      $inst->$prop = $item->column->target_property_value;
+      if (!is_null($cprop)) {
+        $inst->$cprop = $item->column->target_property_value;
+      }
       $inst->save();
     });
   }
@@ -121,10 +123,12 @@ class KanbanItem extends Model
       $target = new $board->model->name;
       $data = [
         $tprop => $item->title,
-        $cprop => $item->column->target_property_value,
         // 'team_id' => $board->team_id, // force the team to the board's team if applicable
         // if there's no team_id property then it'll just silently be ignored
       ];
+      if (!is_null($cprop)) {
+        $data[$cprop] = $item->column->target_property_value;
+      }
 
       $defaults = $board->model->create_upstream_defaults;
       if (is_array($defaults)) {

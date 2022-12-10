@@ -49,17 +49,22 @@ class KanbanBoard extends Model
       if (is_null($kanbanBoard->model->name)) {
         return;
       }
-      $prop = $kanbanBoard->model->target_column_attribute;
+
+      $cprop = $kanbanBoard->model->target_column_attribute;
+      if (is_null($cprop)) {
+        return;
+      }
+
       $model = $kanbanBoard->model->name;
       $model = new $model;
-      $query = $model->distinct($prop);
+      $query = $model->distinct($cprop);
       if ($kanbanBoard->hasFilter()) {
         // $query = $query->whereRaw($kanbanBoard->model_filter);
         $query = QueryBuilder::get($kanbanBoard, $query);
       }
-      $unique = $query->count($prop);
+      $unique = $query->count($cprop);
       if ($unique > 10) {
-        throw new \Exception("Property {$prop} must have at most 10 distinct values.");
+        throw new \Exception("Property {$cprop} must have at most 10 distinct values.");
       }
     });
 
@@ -95,14 +100,21 @@ class KanbanBoard extends Model
 
     $insertValues = [];
 
+    $default_column_id = $columns->first()->id;
+
     foreach ($all as $upstream) {
-      $insertValues[] = [
+      $item = [
         'kanban_board_id' => $this->id,
-        'kanban_column_id' => $columns[$upstream->$cprop]->id,
+        'kanban_column_id' => $default_column_id,
         'title' => $upstream->$tprop,
         'target_type' => $this->model->name,
         'target_id' => $upstream->id,
       ];
+      if (!is_null($cprop)) {
+        $item['kanban_column_id'] = $columns[$upstream->$cprop]->id;
+      }
+
+      $insertValues[] = $item;
     }
     // remove existing
     $existing = $this->items;
@@ -122,22 +134,29 @@ class KanbanBoard extends Model
       return;
     }
     // if ($this->model->options['create_u'])
-    $prop = $this->model->target_column_attribute;
+    $cprop = $this->model->target_column_attribute;
+    if (is_null($cprop)) {
+      if ($this->columns()->count() == 0) {
+        $this->columns()->create(['title' => 'Default', 'value' => 'default']);
+      }
+      return;
+    }
+
     $model = $this->model->name;
     $model = new $model;
-    $query = $model->distinct($prop);
+    $query = $model->distinct($cprop);
 
     if ($this->hasFilter()) {
       // $query = $query->whereRaw($this->model_filter);
       $query = QueryBuilder::get($this, $query);
     }
-    $unique = $query->get($prop);
+    $unique = $query->get($cprop);
     $values = [];
     foreach ($unique as $item) {
-      $values[$item->$prop] = [
-        'title' => Str::title($item->$prop),
+      $values[$item->$cprop] = [
+        'title' => Str::title($item->$cprop),
         // 'slug' => Str::slug($item->$prop),
-        'target_property_value' => $item->$prop,
+        'target_property_value' => $item->$cprop,
       ];
     }
 
