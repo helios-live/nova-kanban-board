@@ -1,5 +1,5 @@
 {
-  "name": "ideatocode/nova-kanban",
+  "name": "ideatocode/nova-kanban-board",
   "description": "A Laravel Nova tool.",
   "keywords": [
     "laravel",
@@ -17,7 +17,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Ideatocode\\NovaKanban\\NovaKanbanServiceProvider"
+        "Ideatocode\\NovaKanban\\ToolServiceProvider"
       ]
     }
   },
