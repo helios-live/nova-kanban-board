@@ -2,7 +2,6 @@
 
 namespace Ideatocode\NovaKanban\Nova;
 
-use App\Nova\Flexible\Presets\NodeQueryFilter;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -19,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Ideatocode\NovaKanban\Nova\Actions\SyncBoard;
+use Ideatocode\NovaKanban\Flexible\Presets\NodeQueryFilter;
 
 class KanbanBoard extends MyResource
 {

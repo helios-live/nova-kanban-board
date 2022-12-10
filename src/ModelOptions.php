@@ -2,9 +2,6 @@
 
 namespace Ideatocode\NovaKanban;
 
-use App\Nova\Flexible\Presets\LeafQueryFilter;
-use App\Nova\Flexible\Presets\NodeQueryFilter;
-use Illuminate\Database\Eloquent\Casts\ArrayObject;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Whitecube\NovaFlexibleContent\Concerns\HasFlexible;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
@@ -38,7 +35,6 @@ class ModelOptions implements Castable
 
         $data->options = (array)$data->options;
         $data->create_upstream_defaults = (array)($data->create_upstream_defaults ?? []);
-        // $data->filter = $this->toFlexible($data->filter, ['query' => new NodeQueryFilter([])]);
 
         $attributes[$key] = $data;
 
