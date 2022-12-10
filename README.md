@@ -42,3 +42,6 @@ You can also make changes to the migrations models used
     $this->app->bind(NovaKanbanBoard::class, MyNovaKanbanBoard::class);
   }
 ```
+
+![image](https://user-images.githubusercontent.com/65734304/206827777-b5042c99-8268-45f3-ba74-8c3a5e62b7fa.png)
+
