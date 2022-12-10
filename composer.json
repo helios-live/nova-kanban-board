@@ -17,7 +17,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Ideatocode\\NovaKanban\\ToolServiceProvider"
+        "Ideatocode\\NovaKanban\\NovaKanbanServiceProvider"
       ]
     }
   },
