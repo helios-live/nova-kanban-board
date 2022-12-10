@@ -69,7 +69,7 @@ class KanbanBoard extends MyResource
     }
 
     $models = $this->getModels();
-    return [
+    return array_merge([
       ID::make()->sortable(),
 
       Text::make("Title")->rules('required'),
@@ -165,18 +165,6 @@ class KanbanBoard extends MyResource
           }
         })->hideFalseValues(),
 
-
-      // Code::make('Filter', 'model->filter')
-      //   ->help("Write an optional SQL filter include only one segment in the board")
-      //   ->language('SQL')
-      //   ->dependsOn(['model->name'], function (Code $field, NovaRequest $request, FormData $formData) {
-      //     $kn = "model->name";
-      //     if (is_null($formData->$kn)) {
-      //       $field->hide();
-      //       return;
-      //     }
-      //   }),
-
       $filterField,
 
       KeyValue::make('Defaults', 'model->create_upstream_defaults')
@@ -206,11 +194,8 @@ class KanbanBoard extends MyResource
           $field->rules($rules);
         }),
 
-      Hidden::make('Team', 'team_id')->default(function ($request) {
-        return $request->user()->current_team_id;
-      }),
 
-    ];
+    ], $this->appendFields());
   }
 
   /**
@@ -328,5 +313,9 @@ class KanbanBoard extends MyResource
       $ret[$field] = $field;
     }
     return $ret;
+  }
+  protected function appendFields()
+  {
+    return [];
   }
 }

@@ -29,6 +29,13 @@ class NovaKanbanServiceProvider extends ServiceProvider
   {
     $this->app->booted(function () {
       $this->routes();
+
+      $mod = app(NovaKanbanBoard::class);
+      $final_class = get_class($mod);
+
+      Nova::resources([
+        $final_class,
+      ]);
     });
     Nova::serving(function (ServingNova $event) {
       //
@@ -37,6 +44,8 @@ class NovaKanbanServiceProvider extends ServiceProvider
     $this->app->bind(KanbanBoard::class, KanbanBoard::class);
     $this->app->bind(KanbanColumn::class, KanbanColumn::class);
     $this->app->bind(KanbanItem::class, KanbanItem::class);
+    $this->app->bind(NovaKanbanBoard::class, NovaKanbanBoard::class);
+
     $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
     $this->publishes([
@@ -70,9 +79,6 @@ class NovaKanbanServiceProvider extends ServiceProvider
    */
   public function register()
   {
-    Nova::resources([
-      NovaKanbanBoard::class,
-    ]);
   }
 
   public static function setCallback($class, $hook, callable $cb)

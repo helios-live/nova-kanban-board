@@ -41,8 +41,10 @@ class NovaKanban extends Tool
       $items[] = MenuItem::link($board->title, '/nova-kanban/' . $board->id);
     }
 
+    $final_class = get_class(app(KanbanBoardNova::class));
+
     return MenuSection::make('Nova Kanban', $items)
-      ->path(MenuItem::resource(KanbanBoardNova::class)->path)
+      ->path(MenuItem::resource($final_class)->path)
       ->icon('server');
   }
 }

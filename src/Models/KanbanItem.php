@@ -100,7 +100,6 @@ class KanbanItem extends Model
         $tprop = $item->board->model->target_title_attribute;
         $inst->$tprop = $item->title;
       }
-      ray($item, $inst, $prop, $item->column);
 
       $inst->$prop = $item->column->target_property_value;
       $inst->save();
