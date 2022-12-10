@@ -303,7 +303,7 @@ class KanbanBoard extends MyResource
           $field->preset(new NodeQueryFilter($list));
           $this->singleton = false;
         }
-      })->preset(new NodeQueryFilter([]));
+      });
   }
   protected function getModelAttributes($model)
   {
