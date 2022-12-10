@@ -2,33 +2,25 @@
 
 namespace Ideatocode\NovaKanban\Nova;
 
-use App\Models\Team;
-use App\Models\User;
 use App\Nova\Flexible\Presets\NodeQueryFilter;
-use Laravel\Nova\Resource;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Code;
-use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\KeyValue;
-use Laravel\Nova\Fields\Textarea;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\File;
 use Laravel\Nova\Fields\BooleanGroup;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
-use App\Nova\Flexible\Presets\QueryFilter;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Ideatocode\NovaKanban\Nova\Actions\SyncBoard;
 
-class KanbanBoard extends Resource
+class KanbanBoard extends MyResource
 {
   protected $singleton = true;
   /**
@@ -326,7 +318,7 @@ class KanbanBoard extends Resource
           $field->preset(new NodeQueryFilter($list));
           $this->singleton = false;
         }
-      });
+      })->preset(new NodeQueryFilter([]));
   }
   protected function getModelAttributes($model)
   {

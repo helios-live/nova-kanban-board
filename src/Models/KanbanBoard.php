@@ -2,15 +2,14 @@
 
 namespace Ideatocode\NovaKanban\Models;
 
-use App\Scopes\CurrentTeam;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
-use Whitecube\NovaFlexibleContent\Value\FlexibleCast;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Ideatocode\NovaKanban\ModelOptions;
 use Ideatocode\NovaKanban\QueryBuilder;
+use Illuminate\Database\Eloquent\Model;
+use Ideatocode\NovaKanban\NovaKanbanServiceProvider;
+use Whitecube\NovaFlexibleContent\Value\FlexibleCast;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class KanbanBoard extends Model
 {
@@ -23,10 +22,6 @@ class KanbanBoard extends Model
   ];
   // protected $fillab
 
-  public function team()
-  {
-    return $this->belongsTo(Team::class);
-  }
 
   public function columns()
   {
@@ -69,7 +64,8 @@ class KanbanBoard extends Model
     static::created(function ($kanbanBoard) {
       $kanbanBoard->syncItems();
     });
-    static::addGlobalScope(new CurrentTeam);
+
+    NovaKanbanServiceProvider::getCallback(KanbanBoard::class, 'booted')();
   }
 
   public function syncItems()

@@ -60,7 +60,7 @@ class KanbanItem extends Model
       $data = [
         $tprop => $item->title,
         $cprop => $item->column->target_property_value,
-        'team_id' => $board->team_id, // force the team to the board's team if applicable
+        // 'team_id' => $board->team_id, // force the team to the board's team if applicable
         // if there's no team_id property then it'll just silently be ignored
       ];
 

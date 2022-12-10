@@ -31,7 +31,10 @@ class NovaKanban extends Tool
    */
   public function menu(Request $request)
   {
-    $boards = KanbanBoard::get();
+    /** @var TModel $model */
+    $model = app(KanbanBoard::class);
+    $boards = $model->get();
+
     $items = [];
 
     foreach ($boards as $board) {

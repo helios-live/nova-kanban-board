@@ -37,7 +37,7 @@ class ModelOptions implements Castable
         }
 
         $data->options = (array)$data->options;
-        $data->create_upstream_defaults = (array)$data->create_upstream_defaults;
+        $data->create_upstream_defaults = (array)($data->create_upstream_defaults ?? []);
         // $data->filter = $this->toFlexible($data->filter, ['query' => new NodeQueryFilter([])]);
 
         $attributes[$key] = $data;
