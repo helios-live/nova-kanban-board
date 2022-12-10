@@ -116,7 +116,7 @@ class KanbanBoard extends MyResource
 
           $choices = [];
           // if we're not required to create the upstream item, title property is optional
-          if (!@$options['create_upstream'] && !@$options['update_upstream']) {
+          if (!($options['create_upstream'] ?? false) && !($options['update_upstream'] ?? false)) {
             // $field->nullable();
             $rules = ['nullable'];
             $choices[null] = 'N/A';

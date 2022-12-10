@@ -25,12 +25,14 @@ class KanbanBoard extends Model
 
   public function columns()
   {
-    return $this->hasMany(KanbanColumn::class)->orderBy('order');
+    $class = get_class(app(KanbanColumn::class));
+    return $this->hasMany($class)->orderBy('order');
   }
 
   public function items()
   {
-    return $this->hasMany(KanbanItem::class);
+    $class = get_class(app(KanbanItem::class));
+    return $this->hasMany($class);
   }
 
 
